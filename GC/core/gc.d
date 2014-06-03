@@ -186,9 +186,45 @@ public:
 
 	void collect();
 
+	/++
+	 + This method will block the invoking thread until all
+	 + pending finalizers have been invoked.
+	 + 
+	 + Note:
+	 + It is likely that the invoking thread will be used 
+	 + to invoke some of the pending finalizers, so it should
+	 + not be assumed that a thread calling this method will
+	 + sleep until all finalizers are invoked.
+	 +/
 	void waitForPendingFinalizers();
 
-
+	/++
+	 + This method will tell the GC that the specified 
+	 + _allocator should be assumed to own the specified block
+	 + of memory, and any references to the block of memory
+	 + should be handled by allocator.
+	 + 
+	 + Notes:
+	 + It is permitted to pass the same location in multiple times
+	 + with different lengths, in which case the last length passed
+	 + in is assumed to be the current _length, however allocator must
+	 + be the exact same. This is done in order to allow allocators
+	 + that succeed in allocating contigious blocks of memory to be
+	 + looked up as effeciently as is possible.
+	 + 
+	 + Params:
+	 + allocator = The _allocator to mark as owning the specified
+	 +             block of memory.
+	 + location = A pointer to the start of the block of memory to
+	 +            take ownership of.
+	 + length = The _length, in bytes, of the block of memory to take
+	 +          ownership of.
+	 + 
+	 + Throws:
+	 + MemoryAlreadyOwnedError if the block of memory that was passed in
+	 + was already owned by another _allocator, or else if the block of 
+	 + memory overlaps with another owned block of memory.
+	 +/
 	void takeOwnership(Allocator* allocator, void* location, size_t length);
 
 	void releaseOwnership(void* location);

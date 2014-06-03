@@ -162,6 +162,51 @@ The allocator being released is responsible for ensuring
 This method may need to go away<br><br>
 
 </dd>
+<dt><big><a name="GC.waitForPendingFinalizers"></a>void <u>waitForPendingFinalizers</u>();
+</big></dt>
+<dd>This method will block the invoking thread until all
+ pending finalizers have been invoked.
+<br><br>
+<b>Note:</b><br>
+It is likely that the invoking thread will be used
+ to invoke some of the pending finalizers, so it should
+ not be assumed that a thread calling this method will
+ sleep until all finalizers are invoked.<br><br>
+
+</dd>
+<dt><big><a name="GC.takeOwnership"></a>void <u>takeOwnership</u>(Allocator* <i>allocator</i>, void* <i>location</i>, size_t <i>length</i>);
+</big></dt>
+<dd>This method will tell the GC that the specified
+ allocator should be assumed to own the specified block
+ of memory, and any references to the block of memory
+ should be handled by <i>allocator</i>.
+<br><br>
+<b>Notes:</b><br>
+It is permitted to pass the same <i>location</i> in multiple times
+ with different lengths, in which case the last <i>length</i> passed
+ in is assumed to be the current length, however <i>allocator</i> must
+ be the exact same. This is done in order to allow allocators
+ that succeed in allocating contigious blocks of memory to be
+ looked up as effeciently as is possible.
+
+<br><br>
+<b>Params:</b><br>
+<table><tr><td>Allocator* <i>allocator</i></td>
+<td>The allocator to mark as owning the specified
+             block of memory.</td></tr>
+<tr><td>void* <i>location</i></td>
+<td>A pointer to the start of the block of memory to
+            take ownership of.</td></tr>
+<tr><td>size_t <i>length</i></td>
+<td>The length, in bytes, of the block of memory to take
+          ownership of.</td></tr>
+</table><br>
+<b>Throws:</b><br>
+MemoryAlreadyOwnedError if the block of memory that was passed in
+ was already owned by another allocator, or else if the block of
+ memory overlaps with another owned block of memory.<br><br>
+
+</dd>
 </dl>
 </dd>
 </dl>
