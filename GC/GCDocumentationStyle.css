@@ -1,0 +1,27 @@
+﻿/**
+ * This CSS document is intended purely to style
+ * the GC design document. It is not intended for general
+ * use to style ddoc output.
+ */
+
+ .gc_todo
+ {
+ 	background: #FFFF00;
+ }
+
+ .gc_clarify
+ {
+ 	background: #DDDDDD;
+ }
+
+ .gc_impl_detail
+ {
+ 	background: #00A0FF;
+ }
+
+ .crossreference
+ {
+ 	color: blue;
+ }
+
+

@@ -27,4 +27,7 @@
   <ItemGroup>
     <Compile Include="core\gc.d" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="GCDocumentationStyle.css" />
+  </ItemGroup>
 </Project>
